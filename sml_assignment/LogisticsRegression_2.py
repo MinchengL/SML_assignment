@@ -19,21 +19,18 @@ def logistics_regression(data):
                 train_relabel.append(1)
             else:
                 train_relabel.append(0)
+        label_encoder = preprocessing.LabelEncoder()
+        encoded_train_relabel = label_encoder.fit_transform(train_relabel)
+        print(1 in encoded_train_relabel)
 
         tfidf_vectorizer = TfidfVectorizer(analyzer='word', stop_words='english', max_df=0.3)
         tfidf_vectorizer.fit(data['text'])
         tfidf_train_data = tfidf_vectorizer.transform(train_data)
         tfidf_test_data = tfidf_vectorizer.transform(test_data)
-        count_vectorizer = CountVectorizer(analyzer='word', stop_words='english', max_df=0.3)
-        count_vectorizer.fit(data['text'])
-        count_train_data = count_vectorizer.transform(train_data)
-        count_test_data = count_vectorizer.transform(test_data)
-        final_train_data = scipy.sparse.hstack([tfidf_train_data, count_train_data])
-        final_test_data = scipy.sparse.hstack([tfidf_test_data, count_test_data])
 
         logistics_regression_model = linear_model.LogisticRegression()
-        logistics_regression_model.fit(final_train_data, train_relabel)
-        single_result = logistics_regression_model.predict_proba(final_test_data)
+        logistics_regression_model.fit(tfidf_train_data, encoded_train_relabel)
+        single_result = logistics_regression_model.predict_proba(tfidf_test_data)
         result = []
         for item in single_result:
             result.append(item[1])
