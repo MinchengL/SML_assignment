@@ -3,7 +3,6 @@ from textblob import TextBlob, Word
 from nltk.stem import WordNetLemmatizer
 import nltk
 import re
-from spellchecker import SpellChecker
 from urlextract import URLExtract
 
 
@@ -12,7 +11,6 @@ def clean_text(file):
     cleaned = []
     stemming = PorterStemmer()
     lemmatization = WordNetLemmatizer()
-    correcter = SpellChecker()
     extractor = URLExtract()
     counter=0
 
