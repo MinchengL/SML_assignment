@@ -45,7 +45,8 @@ if __name__ == '__main__':
     feature_list = []
     data = pandas.DataFrame()
     counter = 0
-    with open('cleaned_data.txt', 'r', encoding='utf-8') as file:
+    #with open('cleaned_data.txt', 'r', encoding='utf-8') as file:
+    with open('train_tweets.txt', 'r', encoding='utf-8') as file:
         for line in file.readlines():
             results = line.split("	")
             label = results[0]

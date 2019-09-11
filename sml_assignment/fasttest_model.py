@@ -8,7 +8,8 @@ def load_data():
     labels = []
     texts = []
 
-    with codecs.open('cleaned_data.txt', 'r', encoding='utf-8') as file:
+    #with codecs.open('cleaned_data.txt', 'r', encoding='utf-8') as file:
+    with codecs.open('train_tweets.txt', 'r', encoding='utf-8') as file:
         for line in file.readlines():
             if line is not None or line is not "":
                 label = line.split('\t')[0]

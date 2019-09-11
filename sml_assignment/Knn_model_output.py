@@ -37,7 +37,8 @@ if __name__ == '__main__':
     feature_list = []
     data = pandas.DataFrame()
     counter = 0
-    with open('cleaned_data.txt', 'r', encoding='utf-8') as file:
+    #with open('cleaned_data.txt', 'r', encoding='utf-8') as file:
+    with open('train_tweets.txt', 'r', encoding='utf-8') as file:
         for line in file.readlines():
             results = line.split("	")
             label = results[0]
@@ -57,7 +58,8 @@ if __name__ == '__main__':
     data = pandas.concat([cleaned_data, cleaned_data], axis=0)
     """
     test_csv_data = []
-    with open('cleaned_unlabel_data.txt', 'r', encoding='utf-8') as file:
+    #with open('cleaned_unlabel_data.txt', 'r', encoding='utf-8') as file:
+    with open('test_tweets_unlabeled.txt', 'r', encoding='utf-8') as file:
         for line in file.readlines():
             if line is not '\n':
                 test_csv_data.append(line)
