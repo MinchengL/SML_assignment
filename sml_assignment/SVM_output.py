@@ -1,5 +1,5 @@
 from sklearn import preprocessing
-from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.feature_extraction.text import TfidfVectorizer, CountVectorizer
 from sklearn.svm import LinearSVC
 import pandas
 
@@ -13,7 +13,7 @@ def svm(data, test_data):
     encoded_train_label = label_encoder.fit_transform(train_label)
     print("encoded label")
 
-    tfidf_vectorizer = TfidfVectorizer(analyzer='word', stop_words='english')
+    tfidf_vectorizer = CountVectorizer(analyzer='word', stop_words='english', max_features=30000)
     tfidf_vectorizer.fit(train_data.values.astype('U'))
     train_data = tfidf_vectorizer.transform(train_data.values.astype('U'))
     test_data = tfidf_vectorizer.transform(test_data.values.astype('U'))
@@ -25,7 +25,7 @@ def svm(data, test_data):
     normalizer.transform(test_data)
     print("normalized data")
 
-    svm_model = LinearSVC(C=12)
+    svm_model = LinearSVC()
     svm_model.fit(train_data, encoded_train_label)
     results = svm_model.predict(test_data)
     print("predicted")
@@ -39,7 +39,7 @@ if __name__ == '__main__':
     feature_list = []
     data = pandas.DataFrame()
     counter = 0
-    with open('train_tweets.txt', 'r', encoding='utf-8') as file:
+    with open('cleaned_data.txt', 'r', encoding='utf-8') as file:
         for line in file.readlines():
             results = line.split("	")
             label = results[0]
@@ -48,10 +48,10 @@ if __name__ == '__main__':
             feature_list.append(text)
     data['text']=feature_list
     data['label']=label_list
-    data = pandas.concat([data,data], axis=0)
+    #data = pandas.concat([data,data], axis=0)
 
     test_csv_data = []
-    with open('test_tweets_unlabeled.txt', 'r', encoding='utf-8') as file:
+    with open('cleaned_unlabel_data.txt', 'r', encoding='utf-8') as file:
         for line in file.readlines():
             if line is not '\n':
                 test_csv_data.append(line)

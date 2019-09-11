@@ -8,7 +8,7 @@ def load_data():
     labels = []
     texts = []
 
-    with codecs.open('train_tweets.txt', 'r', encoding='utf-8') as file:
+    with codecs.open('cleaned_data.txt', 'r', encoding='utf-8') as file:
         for line in file.readlines():
             if line is not None or lien is not "":
                 label = line.split('\t')[0]
@@ -24,7 +24,7 @@ def classify():
     load_data()
     test_text = []
     model = fasttext.train_supervised('train_data.txt',  epoch=20, minn=4, maxn=7, lr=0.8, loss='hs', wordNgrams=3, dim=200)
-    with codecs.open('test_tweets_unlabeled.txt', 'r', encoding='utf-8') as test_file:
+    with codecs.open('cleaned_unlabel_data.txt', 'r', encoding='utf-8') as test_file:
         for line in test_file.readlines():
             test_text.append(line)
     results = []
